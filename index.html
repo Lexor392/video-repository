@@ -1,15 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="https://meyerweb.com/eric/tools/css/reset/reset200802.css">
-    <link rel="stylesheet" href="./style.css"> 
+    <link rel="stylesheet" href="./style.css">
 </head>
+
 <body>
     <video autoplay muted loop playsinline preload="auto">
         <source src="https://redclar-test-domain234553.site/video/main-grid-video-vertical_v4.mp4" type="video/mp4">
     </video>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const video = document.querySelector('video');
+            video.play();
+        });
+    </script>
 </body>
+
 </html>
