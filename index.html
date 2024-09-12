@@ -6,26 +6,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="https://meyerweb.com/eric/tools/css/reset/reset200802.css">
+    <link href="https://unpkg.com/video.js/dist/video-js.min.css" rel="stylesheet">
     <link rel="stylesheet" href="./style.css">
+    <script src="https://unpkg.com/video.js/dist/video.min.js"></script>
 </head>
 
 <body>
-    <video id="myVideo" autoplay muted loop playsinline preload="auto">
-        <source src="http://redclar-test-domain234553.site/video/main-grid-video-vertical_v4.webm" type="video/webm">
+    <video id="myVideo" class="video-js vjs-default-skin" autoplay muted loop playsinline preload="auto">
         <source src="http://redclar-test-domain234553.site/video/main-grid-video-vertical_v6.mp4" type="video/mp4">
     </video>
-    
+
     <script>
-        const video = document.getElementById('myVideo');
-        
-        // Обработчик для проверки, чтобы видео всегда продолжало воспроизводиться
-        video.addEventListener('ended', () => {
-            video.play();
+        var player = videojs('myVideo', {
+            autoplay: true,
+            muted: true,
+            loop: true,
+            playsinline: true
         });
-        
-        // Обработчик для повторного запуска видео, если оно остановилось
-        video.addEventListener('pause', () => {
-            video.play();
+    
+        player.on('loadedmetadata', function() {
+            var videoElement = player.el().getElementsByTagName('video')[0];
+            videoElement.addEventListener('ended', function() {
+                if (videoElement.currentTime >= videoElement.duration - 0.1) {
+                    videoElement.currentTime = 0;
+                    videoElement.play();
+                }
+            });
         });
     </script>
     
