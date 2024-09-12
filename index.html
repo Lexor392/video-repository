@@ -10,22 +10,37 @@
 </head>
 
 <body>
-    <video id="mainVideo" autoplay muted playsinline preload="auto">
-        <source src="https://redclar-test-domain234553.site/video/main-grid-video-vertical-v4_qQD1oaFN.mp4" type="video/mp4">
+    <video id="mainVideo" autoplay muted loop playsinline preload="auto">
+        <!-- Видео начнет воспроизводиться после полной загрузки -->
+        <source src="" type="video/mp4">
     </video>
-
+    
     <script>
-        const video = document.getElementById('mainVideo');
-        
-        video.addEventListener('timeupdate', () => {
-            const timeLeft = video.duration - video.currentTime;
-            
-            // Перезапускаем видео за 4 миллисекунды до конца
-            if (timeLeft <= 0.004) {
-                video.currentTime = 0;
-                video.play();
-            }
-        });
+        // Функция прекэширования видео
+        function preloadVideo(url) {
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.blob();  // Преобразование ответа в Blob
+                })
+                .then(videoBlob => {
+                    const videoURL = URL.createObjectURL(videoBlob); // Создание временной ссылки на Blob
+                    const videoElement = document.getElementById('mainVideo');
+                    videoElement.src = videoURL; // Установка загруженного видео в качестве источника
+                    videoElement.play(); // Автоматическое воспроизведение
+                })
+                .catch(error => {
+                    console.error('There has been a problem with your fetch operation:', error);
+                });
+        }
+    
+        // URL вашего видео
+        const videoURL = 'https://redclar-test-domain234553.site/video/main-grid-video-vertical-v4_qQD1oaFN.mp4';
+    
+        // Вызов функции для прекэширования видео
+        preloadVideo(videoURL);
     </script>
     
 </body>
