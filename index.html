@@ -10,9 +10,24 @@
 </head>
 
 <body>
-    <video id="mainVideo" autoplay muted loop playsinline preload="auto">
+    <video id="mainVideo" autoplay muted playsinline preload="auto">
         <source src="https://redclar-test-domain234553.site/video/main-grid-video-vertical-v4_qQD1oaFN.mp4" type="video/mp4">
     </video>
+
+    <script>
+        const video = document.getElementById('mainVideo');
+        
+        video.addEventListener('timeupdate', () => {
+            const timeLeft = video.duration - video.currentTime;
+            
+            // Перезапускаем видео за 4 миллисекунды до конца
+            if (timeLeft <= 0.004) {
+                video.currentTime = 0;
+                video.play();
+            }
+        });
+    </script>
+    
 </body>
 
 </html>
